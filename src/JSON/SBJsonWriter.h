@@ -28,14 +28,14 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "FBSBJsonBase.h"
+#import "SBJsonBase.h"
 
 /**
  @brief Options for the writer class.
  
  This exists so the SBJSON facade can implement the options in the writer without having to re-declare them.
  */
-@protocol FBSBJsonWriter
+@protocol SBJsonWriter
 
 /**
  @brief Whether we are generating human-readable (multiline) JSON.
@@ -91,7 +91,7 @@
  way you would expect.
  
  */
-@interface FBSBJsonWriter : FBSBJsonBase <FBSBJsonWriter> {
+@interface SBJsonWriter : SBJsonBase <SBJsonWriter> {
 
 @private
     BOOL sortKeys, humanReadable;
@@ -100,7 +100,7 @@
 @end
 
 // don't use - exists for backwards compatibility. Will be removed in 2.3.
-@interface FBSBJsonWriter (Private)
+@interface SBJsonWriter (Private)
 - (NSString*)stringWithFragment:(id)value;
 @end
 

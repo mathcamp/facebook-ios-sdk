@@ -27,15 +27,15 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "FBSBJSON.h"
+#import "SBJSON.h"
 
-@implementation FBSBJSON
+@implementation SBJSON
 
 - (id)init {
     self = [super init];
     if (self) {
-        jsonWriter = [FBSBJsonWriter new];
-        jsonParser = [FBSBJsonParser new];
+        jsonWriter = [SBJsonWriter new];
+        jsonParser = [SBJsonParser new];
         [self setMaxDepth:512];
 
     }

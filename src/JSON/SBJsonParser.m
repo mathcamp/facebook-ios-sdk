@@ -27,9 +27,9 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "FBSBJsonParser.h"
+#import "SBJsonParser.h"
 
-@interface FBSBJsonParser ()
+@interface SBJsonParser ()
 
 - (BOOL)scanValue:(NSObject **)o;
 
@@ -54,7 +54,7 @@
 #define skipDigits(c) while (isdigit(*c)) c++
 
 
-@implementation FBSBJsonParser
+@implementation SBJsonParser
 
 static char ctrl[0x22];
 
