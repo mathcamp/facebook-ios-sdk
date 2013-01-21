@@ -23,7 +23,7 @@
 @interface FBFrictionlessRequestSettings () <FBRequestDelegate>
 
 @property (readwrite, retain) NSArray *     allowedRecipients;
-@property (readwrite, retain) FBRequest*    activeRequest;
+@property (nonatomic, readwrite, retain) FBRequest*    activeRequest;
 
 @end
 
@@ -159,5 +159,14 @@
 
 @synthesize allowedRecipients = _allowedRecipients;
 @synthesize activeRequest = _activeRequest;
+- (void)setActiveRequest:(FBRequest *)activeRequest;
+{
+    if (_activeRequest == activeRequest)
+        return;
+        
+    _activeRequest.delegate = nil;
+    [_activeRequest release];
+    _activeRequest = [activeRequest retain];
+}
 
 @end
