@@ -17,7 +17,7 @@
 #import "FBUtility.h"
 #import "FBGraphObject.h"
 #import "FBRequest.h"
-#import "FBSBJSON.h"
+#import "SBJSON.h"
 #import "FBSession.h"
 #include <sys/time.h>
 
