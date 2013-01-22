@@ -444,7 +444,12 @@ params   = _params;
     NSURL* url = request.URL;
     
     if ([url.scheme isEqualToString:@"fbconnect"]) {
-        if ([[url.resourceSpecifier substringToIndex:8] isEqualToString:@"//cancel"]) {
+        if (url.resourceSpecifier.length >= 10 && [[url.resourceSpecifier substringToIndex:10] isEqualToString:@"//success?"]) {
+            if (_frictionlessSettings.enabled) {
+                [self dialogSuccessHandleFrictionlessResponses:url];
+            }
+            [self dialogDidSucceed:url];
+        } else {
             NSString * errorCode = [self getStringFromUrl:[url absoluteString] needle:@"error_code="];
             NSString * errorStr = [self getStringFromUrl:[url absoluteString] needle:@"error_msg="];
             if (errorCode) {
@@ -456,11 +461,6 @@ params   = _params;
             } else {
                 [self dialogDidCancel:url];
             }
-        } else {
-            if (_frictionlessSettings.enabled) {
-                [self dialogSuccessHandleFrictionlessResponses:url];
-            }
-            [self dialogDidSucceed:url];
         }
         return NO;
     } else if ([_loadingURL isEqual:url]) {
@@ -494,11 +494,11 @@ params   = _params;
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     // 102 == WebKitErrorFrameLoadInterruptedByPolicyChange
-    // -999 == "Operation could not be completed", note -999 occurs when the user clicks away before
+    // NSURLErrorCancelled == "Operation could not be completed", note this occurs when the user clicks away before
     // the page has completely loaded, if we find cases where we want this to result in dialog failure
     // (usually this just means quick-user), then we should add something more robust here to account
     // for differences in application needs
-    if (!(([error.domain isEqualToString:@"NSURLErrorDomain"] && error.code == -999) ||
+    if (!(([error.domain isEqualToString:NSURLErrorDomain] && error.code == NSURLErrorCancelled) ||
           ([error.domain isEqualToString:@"WebKitErrorDomain"] && error.code == 102))) {
         [self dismissWithError:error animated:YES];
     }

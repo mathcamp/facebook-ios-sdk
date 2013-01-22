@@ -146,6 +146,7 @@ static NSString *const FBexpirationDatePropertyName = @"expirationDate";
     [_tokenCaching release];
 
     for (FBRequest* _request in _requests) {
+        _request.delegate = nil;
         [_request removeObserver:self forKeyPath:requestFinishedKeyPath];
     }
     [_lastAccessTokenUpdate release];
@@ -234,11 +235,13 @@ static NSString *const FBexpirationDatePropertyName = @"expirationDate";
 	NSMutableDictionary *params = [[[NSMutableDictionary alloc] init] autorelease];
 	for (NSString *pair in pairs) {
 		NSArray *kv = [pair componentsSeparatedByString:@"="];
-		NSString *val =
-        [[kv objectAtIndex:1]
-         stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        
-		[params setObject:val forKey:[kv objectAtIndex:0]];
+    if ([kv count] >= 2) {
+      NSString *val =
+      [[kv objectAtIndex:1]
+       stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+      [params setObject:val forKey:[kv objectAtIndex:0]];
+    }
 	}
     return params;
 }
