@@ -823,4 +823,10 @@ static NSString *const FBexpirationDatePropertyName = @"expirationDate";
     }
 }
 
+- (void)cancelPendingRequest:(FBRequest *) releasingRequest{
+  [releasingRequest.connection cancel];
+  [releasingRequest removeObserver:self forKeyPath:requestFinishedKeyPath];
+  [_requests removeObject:releasingRequest];
+}
+
 @end

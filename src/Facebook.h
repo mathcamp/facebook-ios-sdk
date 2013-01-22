@@ -120,6 +120,8 @@
 
 - (BOOL)isFrictionlessEnabledForRecipients:(NSArray*)fbids;
 
+- (void)cancelPendingRequest:(FBRequest *) releasingRequest;
+
 @end
 
 ////////////////////////////////////////////////////////////////////////////////
