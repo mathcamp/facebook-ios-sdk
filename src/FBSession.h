@@ -536,6 +536,9 @@ typedef void (^FBSessionReauthorizeResultHandler)(FBSession *session,
                                 allowLoginUI:(BOOL)allowLoginUI
                            completionHandler:(FBSessionStateHandler)handler;
 
++ (BOOL)openNonSystemActiveSessionWithReadPermissions:(NSArray*)readPermissions
+                                allowLoginUI:(BOOL)allowLoginUI
+                           completionHandler:(FBSessionStateHandler)handler; 
 /*!
  @abstract
  This is a simple method for opening a session with Facebook. Using sessionOpen logs on a user,
